@@ -3,4 +3,4 @@ Required libraries could be installed with [pip](https://pypi.python.org/pypi/pi
 ```
 pip install TwitterAPI
 ```
-See the wiki for additional info.
+See the [wiki](https://github.com/arminakvn/t_api/wiki) for additional info.
