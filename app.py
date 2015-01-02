@@ -15,17 +15,17 @@ api = TwitterAPI(
     ACCESS_TOKEN_KEY,
     ACCESS_TOKEN_SECRET)
 handles = []
-results = {}
-result_list = []
-handles_csv = read_csv('HouseofReps_twitterhandles.csv')
+handles_csv = read_csv('Senate_twitterhandles.csv')
 for each in handles_csv:
-	if each['HAgComm'] == 'yes':
+	if each['SAgComm'] == 'yes':
 		handles.append(each)
 
 for each in handles:
+	results = {}
+	result_list = []
 	SEARCH_TERM = each['Twitter_Handle']
 	NAME = each['Name']
-	output = NAME + '.csv'
+	output = 'sen_agg_comm/' + NAME + '.csv'
 	max_ids = []
 	for i in range(0, 32):
 		print "max_ids", max_ids
@@ -43,7 +43,7 @@ for each in handles:
 					r = api.request('statuses/user_timeline', {'screen_name': SEARCH_TERM, 'count': 200, 'include_rts': 1, 'exclude_replies': "flase"})
 					for item in r:
 						max_ids.append(item['id'])
-				elif code==404:
+				elif (code==404) or (code==401):
 					break
 				else:	
 					print "???"
@@ -84,7 +84,7 @@ for each in handles:
 					r = api.request('statuses/user_timeline', {'screen_name': SEARCH_TERM, 'count': 200, 'include_rts': 0, 'exclude_replies': "false", 'max_id': max_id})
 					for item in r:
 						max_ids.append(item['id'])
-				elif code==404:
+				elif (code==404) or (code==401):
 					break
 				else:
 					print "???"
